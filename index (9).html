@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karthik R — AI Engineer, Founder &amp; Product Builder</title>
+<meta name="description" content="Karthik R is an AI Engineer, Founder of EcoEssence and The Hidden Curriculum, and a technology speaker based in Bengaluru, India.">
+<meta name="keywords" content="Karthik R, AI Engineer, EcoEssence, The Hidden Curriculum, AI Automation, Prompt Engineering, Bengaluru">
+<meta name="author" content="Karthik R">
+<meta name="theme-color" content="#050816">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Karthik R — AI Engineer, Founder &amp; Product Builder">
+<meta property="og:description" content="Building AI products and sustainable ventures. Founder of EcoEssence and The Hidden Curriculum.">
+<meta property="og:site_name" content="Karthik R">
+<meta property="og:locale" content="en_IN">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Karthik R — AI Engineer, Founder &amp; Product Builder">
+<meta name="twitter:description" content="Building AI products and sustainable ventures. Founder of EcoEssence and The Hidden Curriculum.">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Karthik R",
+  "jobTitle": "AI Engineer, Founder",
+  "address": { "@type": "PostalAddress", "addressLocality": "Bengaluru", "addressCountry": "IN" },
+  "email": "mailto:karthikr272006@gmail.com",
+  "sameAs": ["https://linkedin.com/in/karthik-r-76a047322"],
+  "founder": [
+    { "@type": "Organization", "name": "EcoEssence" },
+    { "@type": "Organization", "name": "The Hidden Curriculum" }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%235B8CFF%22>K</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Skip link for keyboard/screen-reader users -->
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- Ambient background canvas: node graph signature element -->
+<canvas id="graph-canvas" aria-hidden="true"></canvas>
+
+<!-- ============ HEADER / NAV ============ -->
+<header class="site-header" id="top">
+  <nav class="nav" aria-label="Primary">
+    <a href="#top" class="nav__brand">Karthik<span class="dot">.</span></a>
+
+    <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="Toggle navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="#about" class="nav__link">About</a></li>
+      <li><a href="#skills" class="nav__link">Skills</a></li>
+      <li><a href="#experience" class="nav__link">Experience</a></li>
+      <li><a href="#projects" class="nav__link">Projects</a></li>
+      <li><a href="#achievements" class="nav__link">Achievements</a></li>
+      <li><a href="#services" class="nav__link">Services</a></li>
+      <li><a href="#contact" class="nav__link nav__link--cta">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero" aria-label="Introduction">
+    <div class="hero__inner">
+      <p class="hero__eyebrow" data-reveal>Bengaluru, India</p>
+
+      <h1 class="hero__name" data-reveal>Karthik R</h1>
+
+      <p class="hero__role" data-reveal>
+        <span id="typedRole" aria-live="polite"></span><span class="cursor" aria-hidden="true">|</span>
+      </p>
+
+      <p class="hero__bio" data-reveal>
+        I build AI-driven products and sustainable ventures — from automation
+        workflows to a startup that turns floral waste into perfume. Currently
+        running EcoEssence and teaching AI through The Hidden Curriculum.
+      </p>
+
+      <div class="hero__actions" data-reveal>
+        <button class="btn btn--primary" id="resumeBtn" data-ripple>
+          <span>View Résumé</span>
+        </button>
+        <a href="#contact" class="btn btn--ghost" data-ripple>
+          <span>Get in Touch</span>
+        </a>
+      </div>
+
+      <ul class="hero__socials" data-reveal aria-label="Social links">
+        <li><a href="mailto:karthikr272006@gmail.com" aria-label="Email Karthik">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg>
+          <span>Email</span>
+        </a></li>
+        <li><a href="https://linkedin.com/in/karthik-r-76a047322" target="_blank" rel="noopener noreferrer" aria-label="Karthik on LinkedIn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.06c.53-.95 1.83-1.96 3.77-1.96 4.03 0 4.77 2.5 4.77 5.76V21h-4v-5.5c0-1.3-.02-3-1.86-3-1.87 0-2.16 1.4-2.16 2.9V21h-4z"/></svg>
+          <span>LinkedIn</span>
+        </a></li>
+        <li><a href="tel:+919606319155" aria-label="Call Karthik">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 2.9a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.5 2.9.6a2 2 0 0 1 1.8 2.1z"/></svg>
+          <span>Call</span>
+        </a></li>
+      </ul>
+    </div>
+
+    <button class="scroll-cue" id="scrollCue" aria-label="Scroll to About section">
+      <span></span>
+    </button>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="section" id="about" aria-labelledby="about-heading">
+    <div class="section__inner">
+      <p class="section__eyebrow" data-reveal>About</p>
+      <h2 class="section__title" id="about-heading" data-reveal>Two ventures, one habit: build the thing.</h2>
+
+      <div class="about__grid">
+        <article class="about__story" data-reveal>
+          <p>
+            I'm an AI engineer, entrepreneur, and technology educator based in
+            Bengaluru. My background is a Bachelor's in Computer Applications
+            with a specialization in Artificial Intelligence &amp; Machine
+            Learning — but most of what I've learned came from shipping.
+          </p>
+          <p>
+            I founded <strong>EcoEssence</strong> to solve a problem I kept
+            noticing: tonnes of temple and market floral waste discarded daily,
+            when that same waste holds usable fragrance compounds. EcoEssence
+            turns post-harvest flowers into eco-friendly perfume, from
+            sourcing through to brand and product strategy.
+          </p>
+          <p>
+            Alongside that, I run <strong>The Hidden Curriculum</strong>, where
+            I break down AI, startups, and emerging technology for students who
+            won't find it explained plainly anywhere else — through workshops,
+            content, and structured learning paths like the 30-Day AI
+            Curriculum.
+          </p>
+
+          <div class="about__pillars">
+            <div class="pillar">
+              <h3>Mission</h3>
+              <p>Make advanced technology and sustainable business practical enough for anyone to act on.</p>
+            </div>
+            <div class="pillar">
+              <h3>Vision</h3>
+              <p>A generation of builders who treat AI fluency and environmental responsibility as one skill, not two.</p>
+            </div>
+          </div>
+        </article>
+
+        <aside class="about__timeline" aria-label="Personal timeline">
+          <ol class="timeline">
+            <li class="timeline__item" data-reveal>
+              <span class="timeline__dot"></span>
+              <span class="timeline__year">2022</span>
+              <h3>Started BCA (AI &amp; ML)</h3>
+              <p>Began formal study in artificial intelligence and machine learning, Bengaluru.</p>
+            </li>
+            <li class="timeline__item" data-reveal>
+              <span class="timeline__dot"></span>
+              <span class="timeline__year">2025</span>
+              <h3>Founded EcoEssence</h3>
+              <p>Launched a sustainable fragrance startup converting floral waste into perfume.</p>
+            </li>
+            <li class="timeline__item" data-reveal>
+              <span class="timeline__dot"></span>
+              <span class="timeline__year">2025</span>
+              <h3>Founded The Hidden Curriculum</h3>
+              <p>Started an education platform simplifying AI and future careers for students.</p>
+            </li>
+            <li class="timeline__item" data-reveal>
+              <span class="timeline__dot"></span>
+              <span class="timeline__year">Today</span>
+              <h3>Building, speaking, teaching</h3>
+              <p>Running both ventures while speaking at workshops and shipping AI-driven tools.</p>
+            </li>
+          </ol>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section class="section" id="skills" aria-labelledby="skills-heading">
+    <div class="section__inner">
+      <p class="section__eyebrow" data-reveal>Capabilities</p>
+      <h2 class="section__title" id="skills-heading" data-reveal>What I actually work with</h2>
+      <p class="section__lede" data-reveal>Four areas I move between depending on what the problem needs — code, models, design, or strategy.</p>
+
+      <div class="skills__grid">
+
+        <article class="skill-card" data-reveal data-tilt>
+          <h3 class="skill-card__title">AI &amp; Automation</h3>
+          <ul class="skill-bars">
+            <li><div class="skill-bar__label"><span>Prompt Engineering</span><span class="skill-bar__pct">92%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="92"></div></div></li>
+            <li><div class="skill-bar__label"><span>Generative AI Tools</span><span class="skill-bar__pct">90%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="90"></div></div></li>
+            <li><div class="skill-bar__label"><span>AI Workflow Automation</span><span class="skill-bar__pct">85%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="85"></div></div></li>
+            <li><div class="skill-bar__label"><span>Python</span><span class="skill-bar__pct">78%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="78"></div></div></li>
+          </ul>
+        </article>
+
+        <article class="skill-card" data-reveal data-tilt>
+          <h3 class="skill-card__title">Development</h3>
+          <ul class="skill-bars">
+            <li><div class="skill-bar__label"><span>HTML5</span><span class="skill-bar__pct">88%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="88"></div></div></li>
+            <li><div class="skill-bar__label"><span>CSS3</span><span class="skill-bar__pct">85%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="85"></div></div></li>
+            <li><div class="skill-bar__label"><span>JavaScript</span><span class="skill-bar__pct">80%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="80"></div></div></li>
+            <li><div class="skill-bar__label"><span>Responsive Design</span><span class="skill-bar__pct">86%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="86"></div></div></li>
+          </ul>
+        </article>
+
+        <article class="skill-card" data-reveal data-tilt>
+          <h3 class="skill-card__title">Design</h3>
+          <ul class="skill-bars">
+            <li><div class="skill-bar__label"><span>UI / UX Design</span><span class="skill-bar__pct">84%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="84"></div></div></li>
+            <li><div class="skill-bar__label"><span>Figma</span><span class="skill-bar__pct">82%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="82"></div></div></li>
+            <li><div class="skill-bar__label"><span>Canva &amp; Presentation Design</span><span class="skill-bar__pct">90%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="90"></div></div></li>
+            <li><div class="skill-bar__label"><span>Pitch Deck Design</span><span class="skill-bar__pct">88%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="88"></div></div></li>
+          </ul>
+        </article>
+
+        <article class="skill-card" data-reveal data-tilt>
+          <h3 class="skill-card__title">Business &amp; Strategy</h3>
+          <ul class="skill-bars">
+            <li><div class="skill-bar__label"><span>Startup Validation</span><span class="skill-bar__pct">87%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="87"></div></div></li>
+            <li><div class="skill-bar__label"><span>Market Research</span><span class="skill-bar__pct">83%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="83"></div></div></li>
+            <li><div class="skill-bar__label"><span>Public Speaking</span><span class="skill-bar__pct">85%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="85"></div></div></li>
+            <li><div class="skill-bar__label"><span>Technical Writing</span><span class="skill-bar__pct">80%</span></div><div class="skill-bar"><div class="skill-bar__fill" data-width="80"></div></div></li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section class="section" id="experience" aria-labelledby="experience-heading">
+    <div class="section__inner">
+      <p class="section__eyebrow" data-reveal>Experience</p>
+      <h2 class="section__title" id="experience-heading" data-reveal>Where I've put in the work</h2>
+
+      <ol class="exp-timeline">
+        <li class="exp-item" data-reveal>
+          <div class="exp-item__line"><span class="exp-item__dot"></span></div>
+          <div class="exp-item__content">
+            <span class="exp-item__date">2025 — Present</span>
+            <h3>Founder &amp; CEO, EcoEssence</h3>
+            <p>Built a sustainable fragrance startup from the ground up: secured startup grants, ran customer validation, and led brand and product strategy end to end.</p>
+          </div>
+        </li>
+        <li class="exp-item" data-reveal>
+          <div class="exp-item__line"><span class="exp-item__dot"></span></div>
+          <div class="exp-item__content">
+            <span class="exp-item__date">2025 — Present</span>
+            <h3>Founder, The Hidden Curriculum</h3>
+            <p>Create educational content on AI and technology, run AI workshops, and build media that makes emerging tech accessible to students.</p>
+          </div>
+        </li>
+        <li class="exp-item" data-reveal>
+          <div class="exp-item__line"><span class="exp-item__dot"></span></div>
+          <div class="exp-item__content">
+            <span class="exp-item__date">Internship</span>
+            <h3>Content Developer Intern, Tsidkeu Global Solutions</h3>
+            <p>Worked on technical documentation, content development, and research.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section class="section" id="projects" aria-labelledby="projects-heading">
+    <div class="section__inner">
+      <p class="section__eyebrow" data-reveal>Projects</p>
+      <h2 class="section__title" id="projects-heading" data-reveal>Things I've built</h2>
+
+      <div class="projects__grid">
+
+        <article class="project-card" data-reveal data-tilt>
+          <div class="project-card__glow"></div>
+          <span class="project-card__tag">Startup</span>
+          <h3>EcoEssence</h3>
+          <p>A sustainable fragrance startup converting post-harvest floral waste into eco-friendly perfume — from sourcing to brand strategy.</p>
+          <ul class="project-card__meta">
+            <li>Founder-led</li><li>Grant-funded</li><li>2025 — Present</li>
+          </ul>
+          <button class="project-card__expand" data-expand="eco" aria-expanded="false">
+            Read the story <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+          <p class="project-card__details" id="eco" hidden>
+            EcoEssence started from a simple observation: enormous volumes of
+            floral waste from temples and flower markets go to landfill every
+            day, while carrying real fragrance value. I validated the idea
+            with early customers, secured startup grants to fund initial
+            production, and built the brand identity and go-to-market
+            strategy myself.
+          </p>
+        </article>
+
+        <article class="project-card" data-reveal data-tilt>
+          <div class="project-card__glow"></div>
+          <span class="project-card__tag">Education</span>
+          <h3>The Hidden Curriculum</h3>
+          <p>An educational platform simplifying AI, startups, and future technology for students through workshops and structured content.</p>
+          <ul class="project-card__meta">
+            <li>130+ students reached</li><li>Workshops</li><li>2025 — Present</li>
+          </ul>
+          <button class="project-card__expand" data-expand="thc" aria-expanded="false">
+            Read the story <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+          <p class="project-card__details" id="thc" hidden>
+            Most students hear about AI in hype terms, not practical ones. The
+            Hidden Curriculum exists to close that gap — I run workshops and
+            publish content that explains AI, startup building, and future
+            careers in plain language, grounded in tools people can actually
+            use.
+          </p>
+        </article>
+
+        <article class="project-card" data-reveal data-tilt>
+          <div class="project-card__glow"></div>
+          <span class="project-card__tag">Curriculum</span>
+          <h3>30-Day AI Curriculum</h3>
+          <p>A structured learning roadmap introducing students to practical AI tools and workflows, one day at a time.</p>
+          <ul class="project-card__meta">
+            <li>Self-paced</li><li>Tool-based</li><li>Ongoing</li>
+          </ul>
+          <button class="project-card__expand" data-expand="curr" aria-expanded="false">
+            Read the story <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+          <p class="project-card__details" id="curr" hidden>
+            Built as part of The Hidden Curriculum, this is a day-by-day path
+            through practical AI skills — prompt engineering, common tools,
+            and small workflow automations — designed so a complete beginner
+            has working knowledge inside a month.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ACHIEVEMENTS ============ -->
+  <section class="section" id="achievements" aria-labelledby="achievements-heading">
+    <div class="section__inner">
+      <p class="section__eyebrow" data-reveal>Achievements</p>
+      <h2 class="section__title" id="achievements-heading" data-reveal>A few numbers, honestly</h2>
+
+      <div class="counters">
+        <div class="counter" data-reveal>
+          <span class="counter__number" data-count="3" data-suffix="rd">0</span>
+          <span class="counter__label">Prize — Hack4Agri National Innovation Challenge</span>
+        </div>
+        <div class="counter" data-reveal>
+          <span class="counter__number" data-count="35000" data-prefix="₹" data-suffix="+">0</span>
+          <span class="counter__label">Raised in startup grants</span>
+        </div>
+        <div class="counter" data-reveal>
+          <span class="counter__number" data-count="130" data-suffix="+">0</span>
+          <span class="counter__label">Students reached through AI workshops</span>
+        </div>
+        <div class="counter" data-reveal>
+          <span class="counter__number" data-count="2" data-suffix="">0</span>
+          <span class="counter__label">Ventures founded and actively run</span>
+        </div>
+      </div>
+
+      <div class="awards">
+        <article class="award-card" data-reveal>
+          <svg class="award-card__icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8.5 13.5L7 21l5-2.5L17 21l-1.5-7.5"/></svg>
+          <h3>3rd Prize, Hack4Agri</h3>
+          <p>National Innovation Challenge — recognized for a working, field-relevant solution.</p>
+        </article>
+        <article class="award-card" data-reveal>
+          <svg class="award-card__icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v4a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V4z"/><path d="M12 12v4M8 20h8"/></svg>
+          <h3>Special Appreciation Award</h3>
+          <p>Recognized for contribution and initiative.</p>
+        </article>
+        <article class="award-card" data-reveal>
+          <svg class="award-card__icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.8 6.5 19.5l1-6.3L3 8.9 9 8z"/></svg>
+          <h3>Startup Grants</h3>
+          <p>Secured funding to move EcoEssence from idea to early production.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section class="section" id="services" aria-labelledby="services-heading">
+    <div class="section__inner">
+      <p class="section__eyebrow" data-reveal>Services</p>
+      <h2 class="section__title" id="services-heading" data-reveal>How I can help</h2>
+
+      <div class="services__grid">
+        <article class="service-card" data-reveal>
+          <h3>AI Consulting &amp; Automation</h3>
+          <p>Practical guidance on applying AI and automation to real workflows.</p>
+        </article>
+        <article class="service-card" data-reveal>
+          <h3>Prompt Engineering</h3>
+          <p>Structured prompts and workflows for ChatGPT, Gemini, and Claude.</p>
+        </article>
+        <article class="service-card" data-reveal>
+          <h3>Website &amp; Landing Page Design</h3>
+          <p>Clean, fast, conversion-minded sites built without bloated frameworks.</p>
+        </article>
+        <article class="service-card" data-reveal>
+          <h3>Presentation &amp; Pitch Deck Design</h3>
+          <p>Decks that communicate clearly to investors, judges, or classrooms.</p>
+        </article>
+        <article class="service-card" data-reveal>
+          <h3>Brand Identity &amp; Poster Design</h3>
+          <p>Logos, business cards, and visual identity in Figma and Canva.</p>
+        </article>
+        <article class="service-card" data-reveal>
+          <h3>Research &amp; Technical Writing</h3>
+          <p>Market research and clear technical documentation.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="section" id="testimonials" aria-labelledby="testimonials-heading">
+    <div class="section__inner">
+      <p class="section__eyebrow" data-reveal>Testimonials</p>
+      <h2 class="section__title" id="testimonials-heading" data-reveal>Kind words</h2>
+      <p class="section__lede" data-reveal>Illustrative feedback from workshops and collaborators.</p>
+
+      <div class="testimonial-slider" data-reveal>
+        <div class="testimonial-track" id="testimonialTrack">
+          <figure class="testimonial">
+            <blockquote>"Karthik explained agentic AI in a way our whole class actually understood — no jargon, just clear examples."</blockquote>
+            <figcaption>— Workshop participant, AI fundamentals session</figcaption>
+          </figure>
+          <figure class="testimonial">
+            <blockquote>"The EcoEssence pitch was the most well-researched submission in our cohort — genuinely sustainable, not just marketed that way."</blockquote>
+            <figcaption>— Hackathon mentor, Hack4Agri</figcaption>
+          </figure>
+          <figure class="testimonial">
+            <blockquote>"Fast, clear communicator. Handed off documentation that the rest of the team could actually use without follow-up questions."</blockquote>
+            <figcaption>— Colleague, Tsidkeu Global Solutions</figcaption>
+          </figure>
+        </div>
+        <div class="testimonial-dots" id="testimonialDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="section" id="contact" aria-labelledby="contact-heading">
+    <div class="section__inner">
+      <p class="section__eyebrow" data-reveal>Contact</p>
+      <h2 class="section__title" id="contact-heading" data-reveal>Let's talk</h2>
+      <p class="section__lede" data-reveal>Open to collaborations, speaking invites, and interesting problems.</p>
+
+      <div class="contact__grid">
+        <form class="contact-form" id="contactForm" data-reveal novalidate>
+          <div class="form-row">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required autocomplete="name">
+            <span class="form-error" id="nameError" role="alert"></span>
+          </div>
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+            <span class="form-error" id="emailError" role="alert"></span>
+          </div>
+          <div class="form-row">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+            <span class="form-error" id="messageError" role="alert"></span>
+          </div>
+          <button type="submit" class="btn btn--primary" data-ripple>
+            <span id="submitLabel">Send Message</span>
+          </button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+
+        <aside class="contact-info" aria-label="Direct contact details">
+          <ul class="contact-info__list">
+            <li>
+              <span class="contact-info__label">Email</span>
+              <a href="mailto:karthikr272006@gmail.com">karthikr272006@gmail.com</a>
+            </li>
+            <li>
+              <span class="contact-info__label">Phone</span>
+              <a href="tel:+919606319155">+91 96063 19155</a>
+            </li>
+            <li>
+              <span class="contact-info__label">LinkedIn</span>
+              <a href="https://linkedin.com/in/karthik-r-76a047322" target="_blank" rel="noopener noreferrer">linkedin.com/in/karthik-r</a>
+            </li>
+            <li>
+              <span class="contact-info__label">Location</span>
+              <span>Bengaluru, India</span>
+            </li>
+          </ul>
+
+          <figure class="map-placeholder" aria-label="Map showing Bengaluru, India">
+            <div class="map-placeholder__grid"></div>
+            <span class="map-placeholder__pin">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2C7.6 2 4 5.6 4 10c0 5.4 8 12 8 12s8-6.6 8-12c0-4.4-3.6-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+            </span>
+            <figcaption>Bengaluru, Karnataka, India</figcaption>
+          </figure>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <a href="#top">Karthik<span class="dot">.</span></a>
+      <p>AI Engineer · Founder · Product Builder · Technology Speaker</p>
+    </div>
+
+    <nav class="site-footer__nav" aria-label="Footer">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <ul class="site-footer__socials">
+      <li><a href="mailto:karthikr272006@gmail.com" aria-label="Email">Email</a></li>
+      <li><a href="https://linkedin.com/in/karthik-r-76a047322" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a></li>
+      <li><a href="tel:+919606319155" aria-label="Phone">Phone</a></li>
+    </ul>
+  </div>
+  <p class="site-footer__legal">© <span id="year"></span> Karthik R. Built by hand with HTML, CSS &amp; JavaScript.</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js" defer></script>
+</body>
+</html>
