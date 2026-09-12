@@ -35,6 +35,16 @@ Google Fonts is loaded remotely; local preview can use fallback fonts when offli
 
 ## Checks before publishing
 
+Run the offline HTML smoke tests from the repository root with Python 3 (no extra packages required):
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
+On Windows, use `py -m unittest discover -s tests -v` if the Python launcher is installed.
+
+These checks catch duplicate or empty IDs, missing same-page navigation targets, missing local scripts/stylesheets, broken label/ARIA references, and project detail controls whose targets or initial visibility are inconsistent. They parse `index.html`; they do not execute JavaScript, fetch external resources, or verify message delivery.
+
 If Node.js is installed, check JavaScript syntax:
 
 ```bash
