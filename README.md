@@ -43,7 +43,7 @@ python3 -m unittest discover -s tests -v
 
 On Windows, use `py -m unittest discover -s tests -v` if the Python launcher is installed.
 
-These checks catch duplicate or empty IDs, missing same-page navigation targets, missing local scripts/stylesheets, broken label/ARIA references, and project detail controls whose targets or initial visibility are inconsistent. They parse `index.html`; they do not execute JavaScript, fetch external resources, or verify message delivery.
+These checks catch duplicate or empty IDs, missing same-page navigation targets, missing local scripts/stylesheets, JavaScript `getElementById(...)` lookups without matching HTML IDs, broken label/ARIA references, and project detail controls whose targets or initial visibility are inconsistent. They statically inspect `index.html` and `script.js`; they do not execute JavaScript, fetch external resources, or verify message delivery.
 
 If Node.js is installed, check JavaScript syntax:
 

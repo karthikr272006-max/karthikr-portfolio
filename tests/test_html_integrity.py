@@ -3,11 +3,15 @@
 from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
+import re
 import unittest
 from urllib.parse import unquote, urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
+GET_ELEMENT_BY_ID = re.compile(
+    r"""\bdocument\.getElementById\(\s*(['"])(?P<target>[^'"]+)\1\s*\)"""
+)
 
 
 class PageParser(HTMLParser):
@@ -76,6 +80,21 @@ class HTMLIntegrityTests(unittest.TestCase):
                 self.assertTrue(asset.is_file(), "Referenced local asset is missing")
                 local_count += 1
         self.assertGreater(local_count, 0, "No local script or stylesheet checked")
+
+    def test_javascript_literal_id_lookups_have_html_targets(self):
+        script = (ROOT / "script.js").read_text(encoding="utf-8")
+        lookups = [
+            (match.group("target"), script.count("\n", 0, match.start()) + 1)
+            for match in GET_ELEMENT_BY_ID.finditer(script)
+        ]
+        self.assertTrue(lookups, "No literal document.getElementById lookups found")
+        for target, line in lookups:
+            with self.subTest(line=line, target=target):
+                self.assertIn(
+                    target,
+                    self.ids,
+                    "JavaScript getElementById lookup has no HTML target",
+                )
 
     def test_labels_and_aria_references_have_targets(self):
         references = []
