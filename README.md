@@ -9,6 +9,7 @@ A static personal portfolio built with HTML, CSS and vanilla JavaScript. The sit
 | `index.html` | Page content, navigation, project sections and contact form |
 | `style.css` | Layout, theme, responsive styles and visual effects |
 | `script.js` | Canvas animation, typing, navigation, reveals and form interactions |
+| `tests/` | Dependency-free HTML integrity and reduced-motion interaction checks |
 
 There is no package-install or compilation step for this site. It does not include a contact-message backend.
 
@@ -45,13 +46,16 @@ On Windows, use `py -m unittest discover -s tests -v` if the Python launcher is 
 
 These checks catch duplicate or empty IDs, missing same-page navigation targets, missing local scripts/stylesheets, JavaScript `getElementById(...)` lookups without matching HTML IDs, broken label/ARIA references, and project detail controls whose targets or initial visibility are inconsistent. They statically inspect `index.html` and `script.js`; they do not execute JavaScript, fetch external resources, or verify message delivery.
 
-If Node.js is installed, check JavaScript syntax:
+If Node.js is installed, run the reduced-motion interaction checks and JavaScript syntax check:
 
 ```bash
+node --test tests/test_interactions.cjs
 node --check script.js
 ```
 
-A syntax check does not catch every runtime error. Also preview the page and check:
+The interaction tests execute `script.js` in a minimal DOM harness with reduced motion enabled. They verify startup content, mobile navigation, project expansion and invalid contact-form feedback. They do not run the normal-motion canvas animation or replace a full browser review.
+
+These automated checks do not catch every browser runtime error. Also preview the page and check:
 
 1. Browser console errors after the first animation frame.
 2. Mobile navigation opening and closing.
