@@ -9,7 +9,7 @@ A static personal portfolio built with HTML, CSS and vanilla JavaScript. The sit
 | `index.html` | Page content, navigation, project sections and contact form |
 | `style.css` | Layout, theme, responsive styles and visual effects |
 | `script.js` | Canvas animation, typing, navigation, reveals and form interactions |
-| `tests/` | Dependency-free HTML integrity and reduced-motion interaction checks |
+| `tests/` | Dependency-free HTML integrity, metadata and reduced-motion interaction checks |
 
 There is no package-install or compilation step for this site. It does not include a contact-message backend.
 
@@ -45,6 +45,8 @@ python3 -m unittest discover -s tests -v
 On Windows, use `py -m unittest discover -s tests -v` if the Python launcher is installed.
 
 These checks catch duplicate or empty IDs, missing same-page navigation targets, missing local scripts/stylesheets, JavaScript `getElementById(...)` lookups without matching HTML IDs, broken label/ARIA references, and project detail controls whose targets or initial visibility are inconsistent. They statically inspect `index.html` and `script.js`; they do not execute JavaScript, fetch external resources, or verify message delivery.
+
+The Python suite also validates the document title and description, social-sharing metadata, JSON-LD syntax, and that structured email/social URLs match links shown on the page.
 
 If Node.js is installed, run the reduced-motion interaction checks and JavaScript syntax check:
 
