@@ -59,6 +59,49 @@ class HTMLIntegrityTests(unittest.TestCase):
                 if target and target.lower() != "top":
                     self.assertIn(target, self.ids, "Missing navigation target")
 
+    def test_links_do_not_use_executable_schemes(self):
+        links = [
+            (attrs.get("href"), line)
+            for tag, attrs, line in self.elements
+            if tag in ("a", "area")
+        ]
+        self.assertTrue(links, "No links found in index.html")
+        forbidden_schemes = {"data", "javascript", "vbscript"}
+        for href, line in links:
+            with self.subTest(line=line, href=href):
+                self.assertTrue(href and href.strip(), "Empty link destination")
+                scheme = urlsplit(href.strip()).scheme.lower()
+                self.assertNotIn(
+                    scheme,
+                    forbidden_schemes,
+                    "Link uses an executable URL scheme",
+                )
+
+    def test_new_tab_links_are_isolated(self):
+        links = [
+            (attrs, line)
+            for tag, attrs, line in self.elements
+            if tag in ("a", "area")
+            and (attrs.get("target") or "").lower() == "_blank"
+        ]
+        self.assertTrue(links, "No new-tab links found in index.html")
+        for attrs, line in links:
+            with self.subTest(line=line, href=attrs.get("href")):
+                rel = {
+                    token.lower()
+                    for token in (attrs.get("rel") or "").split()
+                }
+                self.assertIn(
+                    "noopener",
+                    rel,
+                    "New-tab link can access the opener window",
+                )
+                self.assertIn(
+                    "noreferrer",
+                    rel,
+                    "New-tab link leaks the page URL as a referrer",
+                )
+
     def test_local_stylesheets_and_scripts_exist(self):
         assets = []
         for tag, attrs, line in self.elements:
