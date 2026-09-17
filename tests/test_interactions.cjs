@@ -121,7 +121,7 @@ class FakeIntersectionObserver {
   unobserve() {}
 }
 
-function bootPortfolio() {
+function bootPortfolio({ testimonialCount = 0 } = {}) {
   const elements = new Map();
   const add = (id, options) => {
     const element = new FakeElement(options);
@@ -169,6 +169,11 @@ function bootPortfolio() {
   const projectDetails = add('eco');
   projectDetails.hidden = true;
 
+  const testimonials = Array.from(
+    { length: testimonialCount },
+    () => new FakeElement({ classes: ['testimonial'] }),
+  );
+
   const queryResults = new Map([
     ['[data-reveal]', []],
     ['.skill-bar__fill', []],
@@ -176,7 +181,7 @@ function bootPortfolio() {
     ['[data-tilt]', []],
     ['[data-ripple]', []],
     ['.project-card__expand', [projectButton]],
-    ['.testimonial', []],
+    ['.testimonial', testimonials],
   ]);
 
   const document = {
@@ -211,6 +216,7 @@ function bootPortfolio() {
     navToggle,
     projectButton,
     projectDetails,
+    testimonials,
   };
 }
 
@@ -243,6 +249,25 @@ test('project details expand and collapse with accessible state', () => {
   site.projectButton.dispatch('click');
   assert.equal(site.projectButton.getAttribute('aria-expanded'), 'false');
   assert.equal(site.projectDetails.hidden, true);
+});
+
+test('testimonial controls are labelled and switch active testimonial', () => {
+  const site = bootPortfolio({ testimonialCount: 3 });
+  const dots = site.get('testimonialDots').children;
+
+  assert.equal(dots.length, site.testimonials.length);
+  assert.deepEqual(
+    dots.map(dot => dot.getAttribute('aria-label')),
+    ['Show testimonial 1', 'Show testimonial 2', 'Show testimonial 3'],
+  );
+  assert.equal(site.testimonials[0].classList.contains('is-active'), true);
+  assert.equal(dots[0].classList.contains('is-active'), true);
+
+  dots[1].dispatch('click');
+  assert.equal(site.testimonials[0].classList.contains('is-active'), false);
+  assert.equal(site.testimonials[1].classList.contains('is-active'), true);
+  assert.equal(dots[0].classList.contains('is-active'), false);
+  assert.equal(dots[1].classList.contains('is-active'), true);
 });
 
 test('invalid contact fields are blocked and receive specific feedback', () => {
