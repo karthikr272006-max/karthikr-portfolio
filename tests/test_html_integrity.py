@@ -156,6 +156,34 @@ class HTMLIntegrityTests(unittest.TestCase):
                 for target in targets:
                     self.assertIn(target, self.ids, "Missing label or ARIA target")
 
+    def test_form_controls_have_accessible_labels(self):
+        label_targets = {
+            attrs["for"]
+            for tag, attrs, _ in self.elements
+            if tag == "label" and attrs.get("for")
+        }
+        controls = [
+            (tag, attrs, line)
+            for tag, attrs, line in self.elements
+            if tag in ("input", "select", "textarea")
+            and (attrs.get("type") or "").lower()
+            not in ("button", "hidden", "image", "reset", "submit")
+        ]
+        self.assertTrue(controls, "No user-input form controls found")
+        for tag, attrs, line in controls:
+            with self.subTest(line=line, tag=tag, id=attrs.get("id")):
+                labelled_by_element = (
+                    attrs.get("id") in label_targets if attrs.get("id") else False
+                )
+                labelled_by_aria = bool(
+                    (attrs.get("aria-label") or "").strip()
+                    or (attrs.get("aria-labelledby") or "").split()
+                )
+                self.assertTrue(
+                    labelled_by_element or labelled_by_aria,
+                    "Form control has no explicit label or ARIA label",
+                )
+
     def test_project_expanders_match_their_initial_detail_state(self):
         buttons = [
             (attrs, line)
