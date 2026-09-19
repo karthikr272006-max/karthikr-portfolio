@@ -55,6 +55,7 @@ class FakeElement {
     this.links = [];
     this.listeners = new Map();
     this.resetCalled = false;
+    this.scrollIntoViewCalls = [];
     this.style = {};
     this._textContent = '';
     this.value = '';
@@ -113,6 +114,10 @@ class FakeElement {
 
   reset() {
     this.resetCalled = true;
+  }
+
+  scrollIntoView(options) {
+    this.scrollIntoViewCalls.push(options);
   }
 }
 
@@ -237,6 +242,13 @@ test('mobile navigation opens and closes with accessible state', () => {
   site.navLink.dispatch('click');
   assert.equal(site.navToggle.getAttribute('aria-expanded'), 'false');
   assert.equal(site.get('navMenu').classList.contains('is-open'), false);
+});
+
+test('scroll cue navigates to the About section', () => {
+  const site = bootPortfolio();
+
+  site.get('scrollCue').dispatch('click');
+  assert.equal(site.get('about').scrollIntoViewCalls.length, 1);
 });
 
 test('project details expand and collapse with accessible state', () => {
