@@ -122,11 +122,29 @@ class FakeElement {
 }
 
 class FakeIntersectionObserver {
-  observe() {}
-  unobserve() {}
+  constructor(callback) {
+    this.callback = callback;
+    this.observed = [];
+    FakeIntersectionObserver.instances.push(this);
+  }
+
+  observe(target) {
+    this.observed.push(target);
+  }
+
+  unobserve(target) {
+    this.observed = this.observed.filter(element => element !== target);
+  }
+
+  emit(entries) {
+    this.callback(entries);
+  }
 }
 
-function bootPortfolio({ testimonialCount = 0 } = {}) {
+FakeIntersectionObserver.instances = [];
+
+function bootPortfolio({ revealCount = 0, testimonialCount = 0 } = {}) {
+  FakeIntersectionObserver.instances = [];
   const elements = new Map();
   const add = (id, options) => {
     const element = new FakeElement(options);
@@ -178,9 +196,13 @@ function bootPortfolio({ testimonialCount = 0 } = {}) {
     { length: testimonialCount },
     () => new FakeElement({ classes: ['testimonial'] }),
   );
+  const revealElements = Array.from(
+    { length: revealCount },
+    () => new FakeElement(),
+  );
 
   const queryResults = new Map([
-    ['[data-reveal]', []],
+    ['[data-reveal]', revealElements],
     ['.skill-bar__fill', []],
     ['.counter__number', []],
     ['[data-tilt]', []],
@@ -221,6 +243,8 @@ function bootPortfolio({ testimonialCount = 0 } = {}) {
     navToggle,
     projectButton,
     projectDetails,
+    revealElements,
+    revealObserver: FakeIntersectionObserver.instances[0],
     testimonials,
   };
 }
@@ -249,6 +273,22 @@ test('scroll cue navigates to the About section', () => {
 
   site.get('scrollCue').dispatch('click');
   assert.equal(site.get('about').scrollIntoViewCalls.length, 1);
+});
+
+test('revealed content becomes visible when it enters the viewport', () => {
+  const site = bootPortfolio({ revealCount: 2 });
+  const [outsideViewport, insideViewport] = site.revealElements;
+
+  assert.equal(site.revealObserver.observed.length, 2);
+  site.revealObserver.emit([
+    { target: outsideViewport, isIntersecting: false },
+    { target: insideViewport, isIntersecting: true },
+  ]);
+
+  assert.equal(outsideViewport.classList.contains('is-visible'), false);
+  assert.equal(insideViewport.classList.contains('is-visible'), true);
+  assert.equal(site.revealObserver.observed.includes(outsideViewport), true);
+  assert.equal(site.revealObserver.observed.includes(insideViewport), false);
 });
 
 test('project details expand and collapse with accessible state', () => {
