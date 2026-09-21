@@ -156,6 +156,24 @@ class HTMLIntegrityTests(unittest.TestCase):
                 for target in targets:
                     self.assertIn(target, self.ids, "Missing label or ARIA target")
 
+    def test_sections_have_accessible_names(self):
+        sections = [
+            (attrs, line)
+            for tag, attrs, line in self.elements
+            if tag == "section"
+        ]
+        self.assertTrue(sections, "No content sections found")
+        for attrs, line in sections:
+            with self.subTest(line=line, id=attrs.get("id")):
+                labelled_by_text = bool((attrs.get("aria-label") or "").strip())
+                labelled_by_element = bool(
+                    (attrs.get("aria-labelledby") or "").split()
+                )
+                self.assertTrue(
+                    labelled_by_text or labelled_by_element,
+                    "Section has no accessible name",
+                )
+
     def test_form_controls_have_accessible_labels(self):
         label_targets = {
             attrs["for"]
