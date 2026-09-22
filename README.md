@@ -67,13 +67,14 @@ These automated checks do not catch every browser runtime error. Also preview th
 
 ## Known behavior to address
 
-These findings were confirmed against the repository source on 11 September 2026:
+These findings were confirmed against the current repository source:
 
 - **Canvas animation:** `step()` reads `a` outside the inner loop where it is declared. This produces `ReferenceError: a is not defined` when the animated background runs. Define the current node in the outer-loop scope before using it for cursor connections.
 - **Contact form:** submitting valid input prevents the normal form submission, displays a notification and resets the form. It does not send or persist a message. Use the displayed email link to contact Karthik until a real submission flow is implemented.
+- **Form error accessibility:** the inline errors use `role="alert"`, but the name, email and message fields are not linked to those errors with `aria-describedby` or `aria-errormessage`. The validation script also does not expose `aria-invalid`. Associate each field with its error and update `aria-invalid` inside `validateField()` when application changes are authorized.
 - **Résumé button:** currently shows an email-on-request notice; it does not open a résumé file.
 
-The two JavaScript defects above were reproduced with isolated local checks. Those checks are not a substitute for a full browser review.
+The canvas defect and form-validation accessibility gap were reproduced with isolated local checks. The delivery and résumé limitations were verified from source. These checks are not a substitute for a full browser review.
 
 ## Maintenance
 
