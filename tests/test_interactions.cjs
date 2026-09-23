@@ -322,6 +322,21 @@ test('testimonial controls are labelled and switch active testimonial', () => {
   assert.equal(dots[1].classList.contains('is-active'), true);
 });
 
+test('contact validation updates field feedback on blur', () => {
+  const site = bootPortfolio();
+  const email = site.get('email');
+
+  email.value = 'not-an-email';
+  email.dispatch('blur');
+  assert.equal(site.get('emailError').textContent, 'Enter a valid email address.');
+  assert.equal(email.formRow.classList.contains('has-error'), true);
+
+  email.value = 'karthik@example.com';
+  email.dispatch('blur');
+  assert.equal(site.get('emailError').textContent, '');
+  assert.equal(email.formRow.classList.contains('has-error'), false);
+});
+
 test('invalid contact fields are blocked and receive specific feedback', () => {
   const site = bootPortfolio();
 
