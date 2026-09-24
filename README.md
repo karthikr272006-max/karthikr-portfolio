@@ -55,7 +55,7 @@ node --test tests/test_interactions.cjs
 node --check script.js
 ```
 
-The interaction tests execute `script.js` in a minimal DOM harness with reduced motion enabled. They verify startup content, mobile navigation, the About-section scroll cue, viewport-triggered content reveals, project expansion, testimonial controls, and field-level and submit-time contact-form validation. They do not run the normal-motion canvas animation or replace a full browser review.
+The interaction tests execute `script.js` in a minimal DOM harness with reduced motion enabled. They verify startup content, mobile navigation, the About-section scroll cue, viewport-triggered content reveals, skill-bar activation, project expansion, testimonial controls, and field-level and submit-time contact-form validation. They do not run the normal-motion canvas animation or replace a full browser review.
 
 These automated checks do not catch every browser runtime error. Also preview the page and check:
 

@@ -143,7 +143,11 @@ class FakeIntersectionObserver {
 
 FakeIntersectionObserver.instances = [];
 
-function bootPortfolio({ revealCount = 0, testimonialCount = 0 } = {}) {
+function bootPortfolio({
+  revealCount = 0,
+  skillWidths = [],
+  testimonialCount = 0,
+} = {}) {
   FakeIntersectionObserver.instances = [];
   const elements = new Map();
   const add = (id, options) => {
@@ -200,10 +204,15 @@ function bootPortfolio({ revealCount = 0, testimonialCount = 0 } = {}) {
     { length: revealCount },
     () => new FakeElement(),
   );
+  const skillFills = skillWidths.map(width => {
+    const fill = new FakeElement();
+    fill.dataset.width = String(width);
+    return fill;
+  });
 
   const queryResults = new Map([
     ['[data-reveal]', revealElements],
-    ['.skill-bar__fill', []],
+    ['.skill-bar__fill', skillFills],
     ['.counter__number', []],
     ['[data-tilt]', []],
     ['[data-ripple]', []],
@@ -245,6 +254,10 @@ function bootPortfolio({ revealCount = 0, testimonialCount = 0 } = {}) {
     projectDetails,
     revealElements,
     revealObserver: FakeIntersectionObserver.instances[0],
+    skillFills,
+    skillObserver: FakeIntersectionObserver.instances.find(observer =>
+      observer.observed.some(element => skillFills.includes(element))
+    ),
     testimonials,
   };
 }
@@ -289,6 +302,22 @@ test('revealed content becomes visible when it enters the viewport', () => {
   assert.equal(insideViewport.classList.contains('is-visible'), true);
   assert.equal(site.revealObserver.observed.includes(outsideViewport), true);
   assert.equal(site.revealObserver.observed.includes(insideViewport), false);
+});
+
+test('skill bars fill once when they enter the viewport', () => {
+  const site = bootPortfolio({ skillWidths: [78, 92] });
+  const [outsideViewport, insideViewport] = site.skillFills;
+
+  assert.equal(site.skillObserver.observed.length, 2);
+  site.skillObserver.emit([
+    { target: outsideViewport, isIntersecting: false },
+    { target: insideViewport, isIntersecting: true },
+  ]);
+
+  assert.equal(outsideViewport.style.width, undefined);
+  assert.equal(insideViewport.style.width, '92%');
+  assert.equal(site.skillObserver.observed.includes(outsideViewport), true);
+  assert.equal(site.skillObserver.observed.includes(insideViewport), false);
 });
 
 test('project details expand and collapse with accessible state', () => {
