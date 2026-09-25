@@ -31,6 +31,7 @@ Google Fonts is loaded remotely; local preview can use fallback fonts when offli
 
 - Edit profile text, projects and contact links in `index.html`.
 - Edit the rotating role labels in the `roles` array in `script.js`.
+- Keep achievement-counter `data-count` values as digits only; use `data-prefix` and `data-suffix` for displayed symbols.
 - Adjust visual styling in `style.css`.
 - Keep displayed achievements and experience aligned with verified information.
 
@@ -44,7 +45,7 @@ python3 -m unittest discover -s tests -v
 
 On Windows, use `py -m unittest discover -s tests -v` if the Python launcher is installed.
 
-These checks catch duplicate or empty IDs, missing same-page navigation targets, missing local scripts/stylesheets, JavaScript `getElementById(...)` lookups without matching HTML IDs, broken label/ARIA references, unnamed content sections, unlabelled form controls, and project detail controls whose targets or initial visibility are inconsistent. They also reject executable anchor schemes and new-tab links without `noopener noreferrer`. They statically inspect `index.html` and `script.js`; they do not execute JavaScript, fetch external resources, or verify message delivery.
+These checks catch duplicate or empty IDs, missing same-page navigation targets, missing local scripts/stylesheets, JavaScript `getElementById(...)` lookups without matching HTML IDs, broken label/ARIA references, unnamed content sections, unlabelled form controls, malformed achievement-counter targets, and project detail controls whose targets or initial visibility are inconsistent. They also reject executable anchor schemes and new-tab links without `noopener noreferrer`. They statically inspect `index.html` and `script.js`; they do not execute JavaScript, fetch external resources, or verify message delivery.
 
 The Python suite also validates the document title and description, social-sharing metadata, JSON-LD syntax, and that structured email/social URLs match links shown on the page.
 

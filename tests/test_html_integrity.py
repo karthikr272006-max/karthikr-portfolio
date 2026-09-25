@@ -202,6 +202,22 @@ class HTMLIntegrityTests(unittest.TestCase):
                     "Form control has no explicit label or ARIA label",
                 )
 
+    def test_counter_targets_are_unformatted_nonnegative_integers(self):
+        counters = [
+            (attrs, line)
+            for tag, attrs, line in self.elements
+            if "counter__number" in (attrs.get("class") or "").split()
+        ]
+        self.assertTrue(counters, "No achievement counters found")
+        for attrs, line in counters:
+            target = attrs.get("data-count")
+            with self.subTest(line=line, target=target):
+                self.assertRegex(
+                    target or "",
+                    r"^[0-9]+$",
+                    "Counter data-count must contain digits only",
+                )
+
     def test_project_expanders_match_their_initial_detail_state(self):
         buttons = [
             (attrs, line)
