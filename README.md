@@ -63,7 +63,7 @@ These automated checks do not catch every browser runtime error. Also preview th
 1. Browser console errors after the first animation frame.
 2. Mobile navigation opening and closing.
 3. Project details expanding and collapsing.
-4. Keyboard navigation and reduced-motion behavior.
+4. Keyboard navigation and reduced-motion behavior. Enable reduced motion before reloading, then scroll to Achievements and activate the hero's About-section scroll cue.
 5. Valid and invalid contact-form input, including what happens to the entered message.
 
 ## Known behavior to address
@@ -74,8 +74,9 @@ These findings were confirmed against the current repository source:
 - **Contact form:** submitting valid input prevents the normal form submission, displays a notification and resets the form. It does not send or persist a message. Use the displayed email link to contact Karthik until a real submission flow is implemented.
 - **Form error accessibility:** the inline errors use `role="alert"`, but the name, email and message fields are not linked to those errors with `aria-describedby` or `aria-errormessage`. The validation script also does not expose `aria-invalid`. Associate each field with its error and update `aria-invalid` inside `validateField()` when application changes are authorized.
 - **Résumé button:** currently shows an email-on-request notice; it does not open a résumé file.
+- **Reduced motion:** achievement counters still run a 1,400 ms `requestAnimationFrame` sequence with reduced motion enabled, and the hero scroll cue always requests `scrollIntoView({ behavior: 'smooth' })`. The CSS's shorter animation/transition durations do not stop that JavaScript counter loop. When application changes are authorized, show the final counter values immediately (preserving number formatting, prefixes and suffixes) and request non-animated scrolling when `prefersReducedMotion` is true.
 
-The canvas defect and form-validation accessibility gap were reproduced with isolated local checks. The delivery and résumé limitations were verified from source. These checks are not a substitute for a full browser review.
+The canvas defect, form-validation accessibility gap, and reduced-motion counter/scroll requests were reproduced with isolated local checks. With reduced motion enabled, the grant counter still showed `₹30,625+` at 700 ms before reaching `₹35,000+` at 1,400 ms; the scroll handler requested `smooth`. These are script-level observations, not measurements of browser scrolling. The delivery and résumé limitations were verified from source. These checks are not a substitute for a full browser review.
 
 ## Maintenance
 
