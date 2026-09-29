@@ -231,15 +231,21 @@ function bootPortfolio({
       matches: query === '(prefers-reduced-motion: reduce)',
     }),
   };
+  const timeouts = new Map();
+  let nextTimeoutId = 0;
   const context = {
     clearInterval() {},
-    clearTimeout() {},
+    clearTimeout: id => timeouts.delete(id),
     document,
     IntersectionObserver: FakeIntersectionObserver,
     performance: { now: () => 0 },
     requestAnimationFrame: () => 1,
     setInterval: () => 1,
-    setTimeout: () => 1,
+    setTimeout(callback) {
+      const id = ++nextTimeoutId;
+      timeouts.set(id, callback);
+      return id;
+    },
     window,
   };
 
@@ -247,6 +253,16 @@ function bootPortfolio({
 
   return {
     form,
+    // Execute one pending batch without real delays. This exposes deferred
+    // form side effects; it does not simulate browser timer ordering.
+    flushTimeouts() {
+      const pending = Array.from(timeouts.keys());
+      for (const id of pending) {
+        const callback = timeouts.get(id);
+        timeouts.delete(id);
+        if (callback) callback();
+      }
+    },
     get: id => elements.get(id),
     navLink,
     navToggle,
@@ -388,4 +404,62 @@ test('invalid contact fields are blocked and receive specific feedback', () => {
     site.get('messageError').textContent,
     'Message should be at least 10 characters.',
   );
+});
+
+test('each invalid contact field blocks submission without losing entered text', async t => {
+  const cases = [
+    { field: 'name', value: '', error: 'This field is required.' },
+    { field: 'name', value: ' \t ', error: 'This field is required.' },
+    { field: 'email', value: '   ', error: 'This field is required.' },
+    { field: 'email', value: 'not-an-email', error: 'Enter a valid email address.' },
+    { field: 'message', value: ' \n ', error: 'This field is required.' },
+    { field: 'message', value: ' 123456789 ', error: 'Message should be at least 10 characters.' },
+  ];
+
+  for (const { field, value, error } of cases) {
+    await t.test(`${field}: ${JSON.stringify(value)}`, () => {
+      const site = bootPortfolio();
+      const values = {
+        name: 'Karthik',
+        email: 'karthik@example.com',
+        message: 'Please contact me about a workshop.',
+        [field]: value,
+      };
+      for (const [key, input] of Object.entries(values)) {
+        site.get(key).value = input;
+      }
+      site.get('submitLabel').textContent = 'Send Message';
+
+      const event = site.form.dispatch('submit');
+      assert.equal(event.defaultPrevented, true);
+      assert.equal(site.get('submitLabel').textContent, 'Send Message');
+      // A mistaken transition to the submission callback must not reset an
+      // invalid form or replace its error status with a success message.
+      site.flushTimeouts();
+      assert.equal(site.form.resetCalled, false);
+      assert.equal(site.get('formStatus').textContent, 'Please fix the errors above.');
+      assert.equal(site.get('toast').classList.contains('is-visible'), false);
+      for (const [key, input] of Object.entries(values)) {
+        assert.equal(site.get(key).value, input, `${key} input was changed`);
+        assert.equal(site.get(`${key}Error`).textContent, key === field ? error : '');
+        assert.equal(site.get(key).formRow.classList.contains('has-error'), key === field);
+      }
+    });
+  }
+});
+
+test('message validation accepts the ten-character boundary after correction', () => {
+  const site = bootPortfolio();
+  const message = site.get('message');
+
+  message.value = ' 123456789 ';
+  message.dispatch('blur');
+  assert.equal(site.get('messageError').textContent, 'Message should be at least 10 characters.');
+  assert.equal(message.formRow.classList.contains('has-error'), true);
+
+  message.value = ' 1234567890 ';
+  message.dispatch('blur');
+  assert.equal(site.get('messageError').textContent, '');
+  assert.equal(message.formRow.classList.contains('has-error'), false);
+  assert.equal(message.value, ' 1234567890 ');
 });
