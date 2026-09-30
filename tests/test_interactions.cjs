@@ -144,6 +144,7 @@ class FakeIntersectionObserver {
 FakeIntersectionObserver.instances = [];
 
 function bootPortfolio({
+  counterSpecs = [],
   revealCount = 0,
   skillWidths = [],
   testimonialCount = 0,
@@ -209,11 +210,18 @@ function bootPortfolio({
     fill.dataset.width = String(width);
     return fill;
   });
+  const counterElements = counterSpecs.map(({ count, prefix = '', suffix = '' }) => {
+    const counter = new FakeElement();
+    counter.dataset.count = String(count);
+    counter.dataset.prefix = prefix;
+    counter.dataset.suffix = suffix;
+    return counter;
+  });
 
   const queryResults = new Map([
     ['[data-reveal]', revealElements],
     ['.skill-bar__fill', skillFills],
-    ['.counter__number', []],
+    ['.counter__number', counterElements],
     ['[data-tilt]', []],
     ['[data-ripple]', []],
     ['.project-card__expand', [projectButton]],
@@ -231,6 +239,8 @@ function bootPortfolio({
       matches: query === '(prefers-reduced-motion: reduce)',
     }),
   };
+  const animationFrames = new Map();
+  let nextAnimationFrameId = 0;
   const timeouts = new Map();
   let nextTimeoutId = 0;
   const context = {
@@ -239,7 +249,11 @@ function bootPortfolio({
     document,
     IntersectionObserver: FakeIntersectionObserver,
     performance: { now: () => 0 },
-    requestAnimationFrame: () => 1,
+    requestAnimationFrame(callback) {
+      const id = ++nextAnimationFrameId;
+      animationFrames.set(id, callback);
+      return id;
+    },
     setInterval: () => 1,
     setTimeout(callback) {
       const id = ++nextTimeoutId;
@@ -252,7 +266,21 @@ function bootPortfolio({
   vm.runInNewContext(SCRIPT, context, { filename: SCRIPT_PATH });
 
   return {
+    counterElements,
+    counterObserver: FakeIntersectionObserver.instances.find(observer =>
+      observer.observed.some(element => counterElements.includes(element))
+    ),
     form,
+    // Execute one pending animation-frame batch at a controlled timestamp.
+    // This is enough to validate final counter output without emulating a browser.
+    flushAnimationFrames(timestamp) {
+      const pending = Array.from(animationFrames.keys());
+      for (const id of pending) {
+        const callback = animationFrames.get(id);
+        animationFrames.delete(id);
+        if (callback) callback(timestamp);
+      }
+    },
     // Execute one pending batch without real delays. This exposes deferred
     // form side effects; it does not simulate browser timer ordering.
     flushTimeouts() {
@@ -334,6 +362,33 @@ test('skill bars fill once when they enter the viewport', () => {
   assert.equal(insideViewport.style.width, '92%');
   assert.equal(site.skillObserver.observed.includes(outsideViewport), true);
   assert.equal(site.skillObserver.observed.includes(insideViewport), false);
+});
+
+test('achievement counters reveal final formatted values and stop observing', () => {
+  const site = bootPortfolio({
+    counterSpecs: [
+      { count: 130, suffix: '+' },
+      { count: 35000, prefix: '₹', suffix: '+' },
+    ],
+  });
+  const [outsideViewport, insideViewport] = site.counterElements;
+
+  assert.equal(site.counterObserver.observed.length, 2);
+  site.counterObserver.emit([
+    { target: outsideViewport, isIntersecting: false },
+    { target: insideViewport, isIntersecting: true },
+  ]);
+  site.flushAnimationFrames(1400);
+
+  assert.equal(outsideViewport.textContent, '');
+  assert.equal(insideViewport.textContent, '₹35,000+');
+  assert.equal(site.counterObserver.observed.includes(outsideViewport), true);
+  assert.equal(site.counterObserver.observed.includes(insideViewport), false);
+
+  site.counterObserver.emit([{ target: outsideViewport, isIntersecting: true }]);
+  site.flushAnimationFrames(1400);
+  assert.equal(outsideViewport.textContent, '130+');
+  assert.equal(site.counterObserver.observed.includes(outsideViewport), false);
 });
 
 test('project details expand and collapse with accessible state', () => {
