@@ -202,6 +202,38 @@ class HTMLIntegrityTests(unittest.TestCase):
                     "Form control has no explicit label or ARIA label",
                 )
 
+    def test_form_controls_have_serialization_names(self):
+        controls = [
+            (tag, attrs, line)
+            for tag, attrs, line in self.elements
+            if tag in ("input", "select", "textarea")
+            and (attrs.get("type") or "").lower()
+            not in ("button", "hidden", "image", "reset", "submit")
+        ]
+        self.assertTrue(controls, "No user-input form controls found")
+        singular_names = []
+        for tag, attrs, line in controls:
+            name = (attrs.get("name") or "").strip()
+            with self.subTest(line=line, tag=tag, id=attrs.get("id")):
+                self.assertTrue(
+                    name,
+                    "Form control has no name and will be omitted from serialized data",
+                )
+            input_type = (attrs.get("type") or "").lower()
+            if input_type not in ("checkbox", "radio"):
+                singular_names.append(name)
+
+        duplicates = [
+            name
+            for name, count in Counter(singular_names).items()
+            if name and count > 1
+        ]
+        self.assertEqual(
+            duplicates,
+            [],
+            "Non-grouped form controls share a serialization name",
+        )
+
     def test_counter_targets_are_unformatted_nonnegative_integers(self):
         counters = [
             (attrs, line)
