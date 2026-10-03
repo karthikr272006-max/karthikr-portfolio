@@ -234,6 +234,31 @@ class HTMLIntegrityTests(unittest.TestCase):
             "Non-grouped form controls share a serialization name",
         )
 
+    def test_contact_controls_preserve_input_semantics(self):
+        expected = {
+            "name": {"tag": "input", "type": "text", "autocomplete": "name"},
+            "email": {"tag": "input", "type": "email", "autocomplete": "email"},
+            "message": {"tag": "textarea"},
+        }
+        for control_id, attributes in expected.items():
+            with self.subTest(id=control_id):
+                self.assertIn(control_id, self.ids, "Missing contact control")
+                tag, actual, _ = self.ids[control_id]
+                self.assertEqual(tag, attributes["tag"], "Unexpected control element")
+                self.assertIn("required", actual, "Contact control is not required")
+                if "type" in attributes:
+                    self.assertEqual(
+                        (actual.get("type") or "").lower(),
+                        attributes["type"],
+                        "Contact input has the wrong type",
+                    )
+                if "autocomplete" in attributes:
+                    self.assertEqual(
+                        (actual.get("autocomplete") or "").lower(),
+                        attributes["autocomplete"],
+                        "Contact input has the wrong autocomplete hint",
+                    )
+
     def test_counter_targets_are_unformatted_nonnegative_integers(self):
         counters = [
             (attrs, line)
