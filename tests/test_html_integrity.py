@@ -59,6 +59,44 @@ class HTMLIntegrityTests(unittest.TestCase):
                 if target and target.lower() != "top":
                     self.assertIn(target, self.ids, "Missing navigation target")
 
+    def test_skip_link_bypasses_navigation_to_main(self):
+        main_landmarks = [
+            (attrs, line)
+            for tag, attrs, line in self.elements
+            if tag == "main"
+        ]
+        self.assertEqual(
+            len(main_landmarks),
+            1,
+            "Page must contain exactly one main landmark",
+        )
+        main_attrs, _ = main_landmarks[0]
+        main_id = (main_attrs.get("id") or "").strip()
+        self.assertTrue(main_id, "Main landmark needs an ID for the skip link")
+
+        links = [
+            (attrs, line)
+            for tag, attrs, line in self.elements
+            if tag == "a"
+        ]
+        self.assertTrue(links, "No links found in index.html")
+        skip_links = [
+            (attrs, line)
+            for attrs, line in links
+            if "skip-link" in (attrs.get("class") or "").split()
+        ]
+        self.assertEqual(len(skip_links), 1, "Expected exactly one skip link")
+        self.assertEqual(
+            skip_links[0][0].get("href"),
+            f"#{main_id}",
+            "Skip link does not target the main landmark",
+        )
+        self.assertEqual(
+            links[0],
+            skip_links[0],
+            "Skip link must be the first link for keyboard users",
+        )
+
     def test_links_do_not_use_executable_schemes(self):
         links = [
             (attrs.get("href"), line)
