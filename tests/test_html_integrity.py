@@ -97,6 +97,32 @@ class HTMLIntegrityTests(unittest.TestCase):
             "Skip link must be the first link for keyboard users",
         )
 
+    def test_heading_outline_is_sequential(self):
+        headings = [
+            (int(tag[1]), line)
+            for tag, _, line in self.elements
+            if re.fullmatch(r"h[1-6]", tag)
+        ]
+        self.assertTrue(headings, "No headings found in index.html")
+        h1_lines = [line for level, line in headings if level == 1]
+        self.assertEqual(
+            len(h1_lines),
+            1,
+            "Page must contain exactly one top-level heading",
+        )
+        self.assertEqual(
+            headings[0][0],
+            1,
+            "The first heading must be the page's top-level heading",
+        )
+        for (previous, _), (current, line) in zip(headings, headings[1:]):
+            with self.subTest(line=line, previous=previous, current=current):
+                self.assertLessEqual(
+                    current,
+                    previous + 1,
+                    "Heading level skips an intermediate level",
+                )
+
     def test_links_do_not_use_executable_schemes(self):
         links = [
             (attrs.get("href"), line)
